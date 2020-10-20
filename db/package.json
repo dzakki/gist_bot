@@ -1,0 +1,15 @@
+{
+  "name": "gist_db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm install -g json-server && json-server --watch db.json"
+  },
+  "keywords": [
+    "db"
+  ],
+  "author": "dzakkiaz7@gmail.com",
+  "license": "ISC"
+}
