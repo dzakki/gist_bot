@@ -10,7 +10,7 @@ class graphApi {
     static callSendApi(requestBody) {
         // Send the HTTP request to the Messenger Platform
         request({
-            "uri": mPlatformUrl + "/v2.6/me/messages",
+            "uri": mPlatformUrl + "/v3.2/me/messages",
             "qs": { "access_token": PAGE_ACCESS_TOKEN },
             "method": "POST",
             "json": requestBody
