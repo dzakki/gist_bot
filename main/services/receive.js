@@ -50,7 +50,7 @@ class Receive {
 
         // check greeting is here and is confident
         let greeting = this.firstEntity(this.webhookEvent.message.nlp, "greetings");
-        let message = this.webhookEvent.message.text.trim().toLowerCase();
+        let = this.webhookEvent.message.text.trim().toLowerCase();
         let response;
 
         if ((greeting && greeting.confidence > 0.8) || message === "GET STARTED") {
@@ -89,30 +89,58 @@ class Receive {
         //     }
         // }
 
-        return response
-    }
-
-
-    sendMessage(response, delay = 0) {
-        // Construct the message body
-
-        // if ("delay" in response) {
-        //     delay = response["delay"];
-        //     delete response["delay"];
-        // }
-
-        let requestBody = {
-            recipient: {
-                id: this.user.psid
+        return [
+            {
+                text: "Hi <name>! selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku."
             },
-            message: response
-        };
-        // Send the response message
-        setTimeout(() => GraphApi.callSendApi(requestBody), delay);
+            {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "button",
+                        "elements": [{
+                            "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Iya!",
+                                    "payload": "petunjuk_yes",
+                                },
+                                {
+                                    "type": "postback",
+                                    "title": "Tidak!",
+                                    "payload": "petunjuk_no",
+                                }
+                            ],
+                        }]
+                    }
+                }
+            }
+        ]
     }
+}
 
-    firstEntity(nlp, name) {
-        return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
-    }
+
+sendMessage(response, delay = 0) {
+    // Construct the message body
+
+    // if ("delay" in response) {
+    //     delay = response["delay"];
+    //     delete response["delay"];
+    // }
+
+    let requestBody = {
+        recipient: {
+            id: this.user.psid
+        },
+        message: response
+    };
+    // Send the response message
+    setTimeout(() => GraphApi.callSendApi(requestBody), delay);
+}
+
+firstEntity(nlp, name) {
+    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+}
 }
 module.exports = Receive
