@@ -44,7 +44,9 @@ class Receive {
         let response;
 
         if (message === "help") {
-            response = "help ..... ..... ....."
+            response = {
+                text: "help ..... ..... ....."
+            }
         }
 
         return response
