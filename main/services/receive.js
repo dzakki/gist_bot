@@ -109,7 +109,7 @@ class Receive {
             message: response
         };
         // Send the response message
-        setTimeout(() => GraphApi.callSendAPI(requestBody), delay);
+        setTimeout(() => GraphApi.callSendApi(requestBody), delay);
     }
 
     firstEntity(nlp, name) {
