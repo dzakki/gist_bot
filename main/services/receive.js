@@ -8,7 +8,7 @@ class Receive {
 
     handleMessage() {
         let event = this.webhookEvent;
-        let response;
+        let responses;
 
         try {
             if (event.message) {
