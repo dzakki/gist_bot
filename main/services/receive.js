@@ -97,10 +97,10 @@ class Receive {
     sendMessage(response, delay = 0) {
         // Construct the message body
 
-        if ("delay" in response) {
-            delay = response["delay"];
-            delete response["delay"];
-        }
+        // if ("delay" in response) {
+        //     delay = response["delay"];
+        //     delete response["delay"];
+        // }
 
         let requestBody = {
             recipient: {
