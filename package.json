@@ -1,0 +1,33 @@
+{
+  "name": "gist_bot",
+  "version": "1.0.0",
+  "description": "messanger bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dzakki/gist_bot.git"
+  },
+  "keywords": [
+    "messanger bot",
+    "bot"
+  ],
+  "author": "dzakkiaz7@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dzakki/gist_bot/issues"
+  },
+  "homepage": "https://github.com/dzakki/gist_bot#readme",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "express": "^4.17.1",
+    "pg": "^8.4.1",
+    "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
