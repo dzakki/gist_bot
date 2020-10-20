@@ -32,10 +32,9 @@ class Receive {
 
         // Send the response message 
         if (Array.isArray(responses)) {
-            let delay = 0;
-            for (let response of responses) {
-                this.sendMessage(response, delay * 2000);
-                delay++;
+            console.log("prep send msg with length", responses.length)
+            for (let i = 0; i < responses.length; i++) {
+                this.sendMessage(responses[i], i * 2000);
             }
         } else {
             this.sendMessage(responses);
