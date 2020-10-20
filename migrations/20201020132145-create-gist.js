@@ -14,6 +14,9 @@ module.exports = {
       detail: {
         type: Sequelize.STRING
       },
+      psid: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

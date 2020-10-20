@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   Gist.init({
     name: DataTypes.STRING,
-    detail: DataTypes.STRING
+    detail: DataTypes.STRING,
+    psid: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Gist',
