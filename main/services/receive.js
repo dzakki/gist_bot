@@ -118,29 +118,28 @@ class Receive {
             }
         ]
     }
-}
 
 
-sendMessage(response, delay = 0) {
-    // Construct the message body
+    sendMessage(response, delay = 0) {
+        // Construct the message body
 
-    // if ("delay" in response) {
-    //     delay = response["delay"];
-    //     delete response["delay"];
-    // }
+        // if ("delay" in response) {
+        //     delay = response["delay"];
+        //     delete response["delay"];
+        // }
 
-    let requestBody = {
-        recipient: {
-            id: this.user.psid
-        },
-        message: response
-    };
-    // Send the response message
-    setTimeout(() => GraphApi.callSendApi(requestBody), delay);
-}
+        let requestBody = {
+            recipient: {
+                id: this.user.psid
+            },
+            message: response
+        };
+        // Send the response message
+        setTimeout(() => GraphApi.callSendApi(requestBody), delay);
+    }
 
-firstEntity(nlp, name) {
-    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
-}
+    firstEntity(nlp, name) {
+        return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+    }
 }
 module.exports = Receive
