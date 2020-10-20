@@ -31,7 +31,15 @@ class Receive {
 
 
         // Send the response message 
-        this.sendMessage(responses);
+        if (Array.isArray(responses)) {
+            let delay = 0;
+            for (let response of responses) {
+                this.sendMessage(response, delay * 2000);
+                delay++;
+            }
+        } else {
+            this.sendMessage(responses);
+        }
     }
 
     handleTextMessage() {
@@ -86,8 +94,14 @@ class Receive {
     }
 
 
-    sendMessage(response) {
+    sendMessage(response, delay = 0) {
         // Construct the message body
+
+        if ("delay" in response) {
+            delay = response["delay"];
+            delete response["delay"];
+        }
+
         let requestBody = {
             recipient: {
                 id: this.user.psid
@@ -95,7 +109,7 @@ class Receive {
             message: response
         };
         // Send the response message
-        GraphApi.callSendApi(requestBody)
+        setTimeout(() => GraphAPi.callSendAPI(requestBody), delay);
     }
 
     firstEntity(nlp, name) {
