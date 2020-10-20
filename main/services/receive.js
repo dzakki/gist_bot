@@ -40,14 +40,47 @@ class Receive {
             `${this.webhookEvent.message.text} for ${this.user.psid}`
         );
 
+
+        // check greeting is here and is confident
+        let greeting = this.firstEntity(this.webhookEvent.message.nlp, "greetings");
         let message = this.webhookEvent.message.text.trim().toLowerCase();
         let response;
 
-        if (message === "help") {
-            response = {
-                text: "help ..... ..... ....."
-            }
+        if ((greeting && greeting.confidence > 0.8) || message === "GET STARTED") {
+            response = [
+                {
+                    text: "Hi <name>! selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku."
+                },
+                {
+                    "attachment": {
+                        "type": "template",
+                        "payload": {
+                            "template_type": "button",
+                            "elements": [{
+                                "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "Iya!",
+                                        "payload": "petunjuk_yes",
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "Tidak!",
+                                        "payload": "petunjuk_no",
+                                    }
+                                ],
+                            }]
+                        }
+                    }
+                }
+            ]
         }
+        // if (message === "help") {
+        //     response = {
+        //         text: "help ..... ..... ....."
+        //     }
+        // }
 
         return response
     }
