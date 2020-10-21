@@ -9,7 +9,6 @@ class Receive {
     handleMessage() {
         let event = this.webhookEvent;
         let responses;
-
         try {
             if (event.message) {
                 let message = event.message;
@@ -18,7 +17,7 @@ class Receive {
                     responses = this.handleTextMessage();
                 }
             } else if (event.postback) {
-                // responses = this.handlePostback();
+                responses = this.handlePostback();
             }
 
         } catch (error) {
@@ -120,6 +119,55 @@ class Receive {
         ]
     }
 
+    handlePostback() {
+        const payload = this.webhookEvent.postback.payload
+        let response;
+
+        let isGetStarted = this.handleGetStarted(payload)
+        if (isGetStarted) {
+            response = response
+        }
+
+
+        return response
+    }
+
+    handleGetStarted(value) {
+
+        let response = [
+            {
+                text: `Hi ${this.user.first_name} selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
+            },
+            {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "button",
+                        "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "Iya!",
+                                "payload": "petunjuk_yes",
+                            },
+                            {
+                                "type": "postback",
+                                "title": "Tidak!",
+                                "payload": "petunjuk_no",
+                            }
+                        ],
+                    }
+                }
+            }
+        ]
+
+        if (typeof value === "string" && (value === "GET_STARTED" || value === "GET STARTED" || value === "MULAI!")) { // postback
+            return response
+        }
+
+
+        return false
+    }
 
     sendMessage(response, delay = 0) {
         // Construct the message body
