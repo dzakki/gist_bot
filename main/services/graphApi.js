@@ -29,7 +29,7 @@ class graphApi {
             const { data: user } = axios({
                 url: `${mPlatformUrl}/${senderPsid}`,
                 params: {
-                    access_token: config.pageAccesToken,
+                    access_token: PAGE_ACCESS_TOKEN,
                     fields: "first_name, last_name, gender, locale, timezone"
                 },
                 method: "GET"
