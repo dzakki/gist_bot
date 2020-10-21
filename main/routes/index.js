@@ -15,7 +15,7 @@ router.post('/webhook', (req, res) => {
     if (body.object === 'page') {
 
         // Iterates over each entry - there may be multiple if batched
-        body.entry.forEach(function (entry) {
+        body.entry.forEach(async function (entry) {
 
             // Gets the message. entry.messaging is an array, but 
             // will only ever contain one message, so we get index 0
@@ -34,7 +34,8 @@ router.post('/webhook', (req, res) => {
             try {
 
 
-                const user = GraphApi.getUserProfile(sender_psid)
+                const user = await GraphApi.getUserProfile(sender_psid)
+                console.log({ ...user, psid: sender_psid })
                 let receiveMessage = new Receive({ ...user, psid: sender_psid }, webhookEvent);
                 receiveMessage.handleMessage()
 
