@@ -101,8 +101,7 @@ class Receive {
                     "attachment": {
                         "type": "image",
                         "payload": {
-                            "url": img,
-                            "is_reusable": true
+                            "attachment_id": "423579461991202"
                         }
                     }
                 },
