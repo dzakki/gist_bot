@@ -49,7 +49,9 @@ class Receive {
         // console.log(this.webhookEvent.message.nlp, "this.webhookEvent.message.nlp")
         // console.log(this.webhookEvent.message, "this.webhookEvent.message")
         // check greeting is here and is confident
-        let greetingConfidence = this.webhookEvent.message.nlp.traits['wit$greetings'][0].confidence;
+        let greetingConfidence = this.webhookEvent.message.nlp?.traits['wit$greetings'][0]?.confidence;
+        greetingConfidence = !greetingConfidence ? 0 : greetingConfidence
+
         let message = this.webhookEvent.message.text.trim().toLowerCase();
         let response;
 
