@@ -29,27 +29,37 @@
                 <button class="button button--material" onclick="closeWebview()">submit</button>
             </div>
         </span>
+        <p id="msg"></p>
     </ons-page>
     <script>
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) { return; }
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'Messenger'));
+
+        let msg = ""
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'Messenger'));
 
 
         window.extAsyncInit = function () {
             // the Messenger Extensions JS SDK is done loading 
             console.log("the Messenger Extensions JS SDK is done loading ")
+
+            let msgEl = document.getElementById("msg")
+            msg = "the Messenger Extensions JS SDK is done loading "
+            msgEl.innerText = msg
             MessengerExtensions.getContext('806064523477703',
                 function success(thread_context) {
                     // success
+                    msgEl.innerText += JSON.stringify(thread_context)
                     console.log(thread_context)
                 },
                 function error(err) {
                     // error
+                    msgEl.innerText += "errror contect " + err
                     console.log(err)
                 }
             );
@@ -61,6 +71,7 @@
                 console.log("closed")
             }, function error(err) {
                 // an error occurred
+                msgEl.innerText += "errror closed " + err
                 console.log(err)
             });
         }
