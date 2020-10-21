@@ -124,6 +124,7 @@ class Receive {
         let response;
 
         let isGetStarted = this.handleGetStarted(payload)
+        console.log(isGetStarted, "isGetStarted")
         if (isGetStarted) {
             response = response
         }
@@ -160,6 +161,8 @@ class Receive {
                 }
             }
         ]
+
+        console.log("masuk siniiiii")
 
         if (typeof value === "string" && (value === "GET_STARTED" || value === "GET STARTED" || value === "MULAI!")) { // postback
             return response
