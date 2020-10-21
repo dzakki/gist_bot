@@ -52,7 +52,7 @@ class Receive {
         let greeting = this.firstEntity(this.webhookEvent.message.nlp, "GET STARTED");
         let message = this.webhookEvent.message.text.trim().toLowerCase();
         let response;
-        console.log(this.webhookEvent.message, "greeting.confidence")
+        console.log(JSON.stringify(this.webhookEvent.message.nlp), "greeting.confidence")
         if (message === "GET STARTED") {
             response = [
                 {
