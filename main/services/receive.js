@@ -18,6 +18,8 @@ class Receive {
                 }
             } else if (event.postback) {
                 responses = this.handlePostback();
+
+                console.log(responses, "handlePostback")
             }
 
         } catch (error) {
