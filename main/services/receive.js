@@ -52,8 +52,8 @@ class Receive {
         let greeting = this.firstEntity(this.webhookEvent.message.nlp, "GET STARTED");
         let message = this.webhookEvent.message.text.trim().toLowerCase();
         let response;
-
-        if ((greeting && greeting.confidence > 0.8) || message.text === "GET STARTED") {
+        console.log(greeting.confidence, "greeting.confidence")
+        if ((greeting && greeting.confidence > 0.8) || message === "GET STARTED") {
             response = [
                 {
                     text: `Hi ${this.user.first_name} selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
