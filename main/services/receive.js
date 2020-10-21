@@ -54,7 +54,7 @@ class Receive {
         let response;
 
         // {"intents":[],"entities":{"wit$location:location":[{"id":"624173841772436","name":"wit$location","role":"location","start":0,"end":5,"body":"hallo","confidence":0.841,"entities":[],"suggested":true,"value":"hallo","type":"value"}]},"traits":{"wit$sentiment":[{"id":"5ac2b50a-44e4-466e-9d49-bad6bd40092c","value":"positive","confidence":0.733}],"wit$greetings":[{"id":"5900cc2d-41b7-45b2-b21f-b950d3ae3c5c","value":"true","confidence":0.9915}]},"detected_locales":[{"locale":"id_ID","confidence":0.4886}]}
-        console.log(JSON.stringify(this.webhookEvent.message.nlp.entities["wit$greetings"]), "greeting.confidence")
+        console.log(JSON.stringify(this.webhookEvent.message.nlp.entities), "greeting.confidence")
         if (message === "GET STARTED") {
             response = [
                 {
