@@ -1,6 +1,7 @@
 const
     router = require("express").Router(),
-    Receive = require("../services/receive")
+    Receive = require("../services/receive"),
+    GraphApi = require("../services/graphApi")
 
 router.get("/", (req, res) => {
     res.send("hello world")
@@ -30,8 +31,17 @@ router.post('/webhook', (req, res) => {
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
 
-            let receiveMessage = new Receive({ psid: sender_psid }, webhookEvent);
-            receiveMessage.handleMessage()
+            try {
+
+
+                const user = GraphApi.getUserProfile(sender_psid)
+                user.psid = sender_psid
+                let receiveMessage = new Receive(user, webhookEvent);
+                receiveMessage.handleMessage()
+
+            } catch (error) {
+
+            }
         });
 
 

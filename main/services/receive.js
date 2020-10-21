@@ -91,7 +91,7 @@ class Receive {
 
         return [
             {
-                text: "Hi <name>! selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku."
+                text: `Hi ${this.user.first_name} selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
             },
             {
                 "attachment": {

@@ -21,15 +21,26 @@ class graphApi {
             .catch((err) => {
                 console.error("Unable to send message:" + err);
             })
+    }
 
 
-        // , (err, _res, _body) => {
-        //     if (!err) {
-        //         console.log('message sent!')
-        //     } else {
-        //         console.error("Unable to send message:" + err);
-        //     }
-        // });
+    static getUserProfile(senderPsid) {
+        try {
+            const { data: user } = axios({
+                url: `${mPlatformUrl}/${senderPsid}`,
+                params: {
+                    access_token: config.pageAccesToken,
+                    fields: "first_name, last_name, gender, locale, timezone"
+                },
+                method: "GET"
+            })
+
+            return user
+
+        } catch (error) {
+            console.error("Unable to fetch profile:" + error);
+            throw error
+        }
     }
 
 }
