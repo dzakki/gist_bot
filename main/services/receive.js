@@ -98,14 +98,6 @@ class Receive {
                     text: "ingin melihat daftar point yang sudah kamu simpan? kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di bawah ini!"
                 },
                 {
-                    "attachment": {
-                        "type": "image",
-                        "payload": {
-                            "attachment_id": "423579461991202"
-                        }
-                    }
-                },
-                {
                     text: "ingin melihat detail point? kamu bisa menulis pesan ke aku dengan tulisan seperti ini 'cari - <nama point>' . contohnya: 'cari - motivasi 1'"
                 }
             ]
