@@ -35,6 +35,7 @@ class graphApi {
                 method: "GET"
             })
 
+            console.log(user)
             return user
 
         } catch (error) {
