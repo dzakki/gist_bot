@@ -51,11 +51,11 @@ class Receive {
         // check greeting is here and is confident
         let greetingConfidence = this.isGreetings(this.webhookEvent.message.nlp)
 
-        let message = this.webhookEvent.message.text.trim().toLowerCase();
+        let message = this.webhookEvent.message.text.trim().toUpperCase();
         let response = "pesan anda tidak bisa di baca";
 
         const isGetStarted = this.handleGetStarted(message)
-        console.log(isGetStarted, "==============", message, "=================")
+        // console.log(isGetStarted, "==============", message, "=================")
         if (greetingConfidence) {
             response = this.handleGetStarted(true)
         } else if (isGetStarted) {
