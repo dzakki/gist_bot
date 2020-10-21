@@ -24,9 +24,9 @@ class graphApi {
     }
 
 
-    static getUserProfile(senderPsid) {
+    static async getUserProfile(senderPsid) {
         try {
-            const { data: user } = axios({
+            const { data: user } = await axios({
                 url: `${mPlatformUrl}/${senderPsid}`,
                 params: {
                     access_token: PAGE_ACCESS_TOKEN,
