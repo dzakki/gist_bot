@@ -43,6 +43,16 @@
         window.extAsyncInit = function () {
             // the Messenger Extensions JS SDK is done loading 
             console.log("the Messenger Extensions JS SDK is done loading ")
+            MessengerExtensions.getContext('806064523477703',
+                function success(thread_context) {
+                    // success
+                    console.log(thread_context)
+                },
+                function error(err) {
+                    // error
+                    console.log(err)
+                }
+            );
         };
 
         function closeWebview() {
