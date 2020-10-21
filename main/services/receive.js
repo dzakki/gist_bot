@@ -47,13 +47,15 @@ class Receive {
             `${this.webhookEvent.message.text} for ${this.user.psid}`
         );
 
-
+        console.log(this.webhookEvent.message.nlp, "this.webhookEvent.message.nlp")
+        console.log(this.webhookEvent.message, "this.webhookEvent.message")
         // check greeting is here and is confident
-        let greeting = this.firstEntity(this.webhookEvent.message.nlp, "greetings");
+        let greeting = this.firstEntity(this.webhookEvent.message.nlp, "GET STARTED");
         let message = this.webhookEvent.message.text.trim().toLowerCase();
         let response;
 
-        if ((greeting && greeting.confidence > 0.8) || message === "GET STARTED") {
+        if ((greeting && greeting.confidence > 0.8) || message.text === "GET STARTED") {
+            console.log("masuk kesni")
             response = [
                 {
                     text: "Hi <name>! selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku."
@@ -89,7 +91,7 @@ class Receive {
         //     }
         // }
 
-        console.log(this.user, "this user")
+        // console.log(this.user, "this user")
         return [
             {
                 text: `Hi ${this.user.first_name} selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
