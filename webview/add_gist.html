@@ -45,7 +45,7 @@
             console.log("the Messenger Extensions JS SDK is done loading ")
         };
 
-        closeWebview() {
+        function closeWebview() {
             MessengerExtensions.requestCloseBrowser(function success() {
                 // webview closed
             }, function error(err) {
