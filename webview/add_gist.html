@@ -26,7 +26,7 @@
         </span>
         <span>
             <div>
-                <button class="button button--material">submit</button>
+                <button class="button button--material" onclick="closeWebview()">submit</button>
             </div>
         </span>
     </ons-page>
@@ -44,6 +44,15 @@
             // the Messenger Extensions JS SDK is done loading 
             console.log("the Messenger Extensions JS SDK is done loading ")
         };
+
+        closeWebview() {
+            MessengerExtensions.requestCloseBrowser(function success() {
+                // webview closed
+            }, function error(err) {
+                // an error occurred
+            });
+        }
+
     </script>
 
 </body>
