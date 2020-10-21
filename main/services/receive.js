@@ -52,7 +52,7 @@ class Receive {
         let greetingConfidence = this.isGreetings(this.webhookEvent.message.nlp)
 
         let message = this.webhookEvent.message.text.trim().toLowerCase();
-        let response;
+        let response = "pesan anda tidak bisa di baca";
 
         const isGetStarted = this.handleGetStarted(message)
 
