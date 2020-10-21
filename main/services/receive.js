@@ -79,6 +79,8 @@ class Receive {
         if (isGetStarted) {
             response = isGetStarted
         } else if (payload === "PETUNJUK_YES") {
+            const img = "https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/65886315_2366735946981615_1399970578978308096_n.png?_nc_cat=111&_nc_sid=ae9488&_nc_ohc=1YlbIqW3PzAAX8_qg5k&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=9835ca53452054837701b8a70ed66499&oe=5FB43066"
+
             response = [
                 {
                     text: "ingin menyimpan poin kamu? kamu bisa inputkan nama dan detail dari pada point kamu pada form yang sudah di sediakan, lihat di bawah gambar di bawah ini!."
@@ -87,7 +89,7 @@ class Receive {
                     "attachment": {
                         "type": "image",
                         "payload": {
-                            "url": "https://webstockreview.net/images/facebook-clipart-small-size-4.png",
+                            "url": img,
                             "is_reusable": true
                         }
                     }
@@ -99,7 +101,7 @@ class Receive {
                     "attachment": {
                         "type": "image",
                         "payload": {
-                            "url": "https://webstockreview.net/images/facebook-clipart-small-size-4.png",
+                            "url": img,
                             "is_reusable": true
                         }
                     }
