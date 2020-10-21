@@ -18,8 +18,6 @@ class Receive {
                 }
             } else if (event.postback) {
                 responses = this.handlePostback();
-
-                console.log(responses, "handlePostback")
             }
 
         } catch (error) {
@@ -48,15 +46,14 @@ class Receive {
             `${this.webhookEvent.message.text} for ${this.user.psid}`
         );
 
-        console.log(this.webhookEvent.message.nlp, "this.webhookEvent.message.nlp")
-        console.log(this.webhookEvent.message, "this.webhookEvent.message")
+        // console.log(this.webhookEvent.message.nlp, "this.webhookEvent.message.nlp")
+        // console.log(this.webhookEvent.message, "this.webhookEvent.message")
         // check greeting is here and is confident
         let greeting = this.firstEntity(this.webhookEvent.message.nlp, "GET STARTED");
         let message = this.webhookEvent.message.text.trim().toLowerCase();
         let response;
 
         if ((greeting && greeting.confidence > 0.8) || message.text === "GET STARTED") {
-            console.log("masuk kesni")
             response = [
                 {
                     text: "Hi <name>! selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku."
@@ -126,9 +123,8 @@ class Receive {
         let response;
 
         let isGetStarted = this.handleGetStarted(payload)
-        console.log(isGetStarted, "isGetStarted")
         if (isGetStarted) {
-            response = response
+            response = isGetStarted
         }
 
 
@@ -163,8 +159,6 @@ class Receive {
                 }
             }
         ]
-
-        console.log("masuk siniiiii")
 
         if (typeof value === "string" && (value === "GET_STARTED" || value === "GET STARTED" || value === "MULAI!")) { // postback
             return response
