@@ -84,7 +84,25 @@ class Receive {
                     text: "ingin menyimpan poin kamu? kamu bisa inputkan nama dan detail dari pada point kamu pada form yang sudah di sediakan, lihat di bawah gambar di bawah ini!."
                 },
                 {
+                    "attachment": {
+                        "type": "image",
+                        "payload": {
+                            "url": "https://blog.ferplast.com/wp-content/uploads/2019/07/owning-a-white-cat-5b1b91a318ba9-1024x683.jpg",
+                            "is_reusable": true
+                        }
+                    }
+                },
+                {
                     text: "ingin melihat daftar point yang sudah kamu simpan? kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di bawah ini!"
+                },
+                {
+                    "attachment": {
+                        "type": "image",
+                        "payload": {
+                            "url": "https://blog.ferplast.com/wp-content/uploads/2019/07/owning-a-white-cat-5b1b91a318ba9-1024x683.jpg",
+                            "is_reusable": true
+                        }
+                    }
                 },
                 {
                     text: "ingin melihat detail point? kamu bisa menulis pesan ke aku dengan tulisan seperti ini 'cari - <nama point>' . contohnya: 'cari - motivasi 1'"
