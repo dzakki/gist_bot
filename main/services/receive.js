@@ -98,21 +98,19 @@ class Receive {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "elements": [{
-                            "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "title": "Iya!",
-                                    "payload": "petunjuk_yes",
-                                },
-                                {
-                                    "type": "postback",
-                                    "title": "Tidak!",
-                                    "payload": "petunjuk_no",
-                                }
-                            ],
-                        }]
+                        "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "Iya!",
+                                "payload": "petunjuk_yes",
+                            },
+                            {
+                                "type": "postback",
+                                "title": "Tidak!",
+                                "payload": "petunjuk_no",
+                            }
+                        ],
                     }
                 }
             }
