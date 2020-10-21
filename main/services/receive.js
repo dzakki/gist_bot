@@ -55,7 +55,7 @@ class Receive {
         let response = "pesan anda tidak bisa di baca";
 
         const isGetStarted = this.handleGetStarted(message)
-
+        console.log(isGetStarted, "==============", message, "=================")
         if (greetingConfidence) {
             response = this.handleGetStarted(true)
         } else if (isGetStarted) {
