@@ -56,28 +56,26 @@ class Receive {
         if ((greeting && greeting.confidence > 0.8) || message.text === "GET STARTED") {
             response = [
                 {
-                    text: "Hi <name>! selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku."
+                    text: `Hi ${this.user.first_name} selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
                 },
                 {
                     "attachment": {
                         "type": "template",
                         "payload": {
                             "template_type": "button",
-                            "elements": [{
-                                "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
-                                "buttons": [
-                                    {
-                                        "type": "postback",
-                                        "title": "Iya!",
-                                        "payload": "petunjuk_yes",
-                                    },
-                                    {
-                                        "type": "postback",
-                                        "title": "Tidak!",
-                                        "payload": "petunjuk_no",
-                                    }
-                                ],
-                            }]
+                            "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Iya!",
+                                    "payload": "petunjuk_yes",
+                                },
+                                {
+                                    "type": "postback",
+                                    "title": "Tidak!",
+                                    "payload": "petunjuk_no",
+                                }
+                            ],
                         }
                     }
                 }
@@ -90,32 +88,7 @@ class Receive {
         // }
 
         // console.log(this.user, "this user")
-        return [
-            {
-                text: `Hi ${this.user.first_name} selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
-            },
-            {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "button",
-                        "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
-                        "buttons": [
-                            {
-                                "type": "postback",
-                                "title": "Iya!",
-                                "payload": "petunjuk_yes",
-                            },
-                            {
-                                "type": "postback",
-                                "title": "Tidak!",
-                                "payload": "petunjuk_no",
-                            }
-                        ],
-                    }
-                }
-            }
-        ]
+        return response
     }
 
     handlePostback() {
