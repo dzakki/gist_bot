@@ -1,7 +1,7 @@
 const
     mPlatformUrl = `https://graph.facebook.com`,
     PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
-    request = require("request")
+    axios = require("axios")
 
 
 
@@ -9,18 +9,27 @@ class graphApi {
 
     static callSendApi(requestBody) {
         // Send the HTTP request to the Messenger Platform
-        request({
-            "uri": mPlatformUrl + "/v3.2/me/messages",
-            "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        axios({
+            "url": mPlatformUrl + "/v3.2/me/messages",
+            "params": { "access_token": PAGE_ACCESS_TOKEN },
             "method": "POST",
-            "json": requestBody
-        }, (err, _res, _body) => {
-            if (!err) {
+            "data": requestBody
+        })
+            .then(() => {
                 console.log('message sent!')
-            } else {
+            })
+            .catch((err) => {
                 console.error("Unable to send message:" + err);
-            }
-        });
+            })
+
+
+        // , (err, _res, _body) => {
+        //     if (!err) {
+        //         console.log('message sent!')
+        //     } else {
+        //         console.error("Unable to send message:" + err);
+        //     }
+        // });
     }
 
 }
