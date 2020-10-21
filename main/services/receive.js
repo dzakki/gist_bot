@@ -81,28 +81,26 @@ class Receive {
         } else if (payload === "PETUNJUK_YES") {
             response = [
                 {
+                    text: "ingin menyimpan poin kamu? kamu bisa inputkan nama dan detail dari pada point kamu pada form yang sudah di sediakan, lihat di bawah gambar di bawah ini!."
+                },
+                {
                     "attachment": {
-                        "type": "template",
+                        "type": "image",
                         "payload": {
-                            "template_type": "generic",
-                            "elements": [{
-                                "title": "ingin menyimpan poin kamu?",
-                                "subtitle": "kamu bisa inputkan nama dan detail dari pada point kamu pada form yang sudah di sediakan, lihat di bawah gambar di atas!.",
-                                "image_url": "https://blog.ferplast.com/wp-content/uploads/2019/07/owning-a-white-cat-5b1b91a318ba9-1024x683.jpg",
-                            }]
+                            "url": "https://webstockreview.net/images/facebook-clipart-small-size-4.png",
+                            "is_reusable": true
                         }
                     }
                 },
                 {
+                    text: "ingin melihat daftar point yang sudah kamu simpan? kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di bawah ini!"
+                },
+                {
                     "attachment": {
-                        "type": "template",
+                        "type": "image",
                         "payload": {
-                            "template_type": "generic",
-                            "elements": [{
-                                "title": "ingin melihat daftar point yang sudah kamu simpan?",
-                                "subtitle": "kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di atas!.",
-                                "image_url": "https://blog.ferplast.com/wp-content/uploads/2019/07/owning-a-white-cat-5b1b91a318ba9-1024x683.jpg",
-                            }]
+                            "url": "https://webstockreview.net/images/facebook-clipart-small-size-4.png",
+                            "is_reusable": true
                         }
                     }
                 },
