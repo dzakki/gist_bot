@@ -40,7 +40,8 @@ router.post('/webhook', (req, res) => {
                 receiveMessage.handleMessage()
 
             } catch (error) {
-
+                console.error(error)
+                res.sendStatus(400);
             }
         });
 
