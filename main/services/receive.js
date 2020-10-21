@@ -72,12 +72,28 @@ class Receive {
     }
 
     handlePostback() {
-        const payload = this.webhookEvent.postback.payload
+        const payload = this.webhookEvent.postback.payload.toUpperCase()
         let response;
 
         let isGetStarted = this.handleGetStarted(payload)
         if (isGetStarted) {
             response = isGetStarted
+        } else if (payload === "PETUNJUK_YES") {
+            response = [
+                {
+                    text: "ingin menyimpan poin kamu? kamu bisa inputkan nama dan detail dari pada point kamu pada form yang sudah di sediakan, lihat di bawah gambar di bawah ini!."
+                },
+                {
+                    text: "ingin melihat daftar point yang sudah kamu simpan? kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di bawah ini!"
+                },
+                {
+                    text: "ingin melihat detail point? kamu bisa menulis pesan ke aku dengan tulisan seperti ini 'cari - <nama point>' . contohnya: 'cari - motivasi 1'"
+                }
+            ]
+        } else if (payload === "PETUNJUK_NO") {
+            response = {
+                text: "Okay!"
+            }
         }
 
 
@@ -100,12 +116,12 @@ class Receive {
                             {
                                 "type": "postback",
                                 "title": "Iya!",
-                                "payload": "petunjuk_yes",
+                                "payload": "PETUNJUK_YES",
                             },
                             {
                                 "type": "postback",
                                 "title": "Tidak!",
-                                "payload": "petunjuk_no",
+                                "payload": "PETUNJUK_NO",
                             }
                         ],
                     }
