@@ -49,14 +49,16 @@ class Receive {
         // console.log(this.webhookEvent.message.nlp, "this.webhookEvent.message.nlp")
         // console.log(this.webhookEvent.message, "this.webhookEvent.message")
         // check greeting is here and is confident
-        let greetingConfidence = this.webhookEvent.message.nlp.traits['wit$greetings'][0];
-        greetingConfidence = !greetingConfidence ? 0 : greetingConfidence.confidence
+        let greetingConfidence = this.isGreetings(this.webhookEvent.message.nlp)
 
         let message = this.webhookEvent.message.text.trim().toLowerCase();
         let response;
 
-        const isGetStarted = this.handleGetStarted(greetingConfidence > 0.8)
-        if (greetingConfidence > 0.8 || isGetStarted) {
+        const isGetStarted = this.handleGetStarted(message)
+
+        if (greetingConfidence) {
+            response = this.handleGetStarted(true)
+        } else if (isGetStarted) {
             response = isGetStarted
         }
         // if (message === "help") {
@@ -137,6 +139,13 @@ class Receive {
         };
         // Send the response message
         setTimeout(() => GraphApi.callSendApi(requestBody), delay);
+    }
+
+    isGreetings(nlp) {
+        if (nlp && nlp.traits && nlp.traits['wit$greetings'] && nlp.traits['wit$greetings'][0]) {
+            return nlp.traits['wit$greetings'][0].confidence
+        }
+        return 0
     }
 }
 module.exports = Receive
