@@ -105,6 +105,10 @@ class Receive {
             response = {
                 text: "Okay!"
             }
+        } else if (payload === "ALERT_SUCCESS_ADD_GIST") {
+            response = {
+                text: this.webhookEvent.postback.payload.text
+            }
         }
 
 

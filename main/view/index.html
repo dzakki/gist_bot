@@ -103,17 +103,37 @@
                 return false
             }
 
-            fetch(`${apiUrl}/gists`, {
+            fetch(`${apiUrl}/webhook`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    name,
-                    detail,
-                    psid
+                data: JSON.stringify({
+                    object: "object",
+                    "entry": [{
+                        "messaging": [{
+                            "postback": {
+                                payload: "ALERT_SUCCESS_ADD_GIST",
+                                text: `selamat!, anda berhasil menambahkan poin`
+                            }
+                        }]
+                    }]
                 })
             })
+                .then((res) => {
+                    return fetch(`${apiUrl}/gists`, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name,
+                            detail,
+                            psid
+                        })
+                    })
+                })
+
                 .then(res => {
                     return res.json()
                 })
