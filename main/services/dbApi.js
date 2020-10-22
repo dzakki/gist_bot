@@ -1,6 +1,8 @@
 const
     dbApiUrl = `https://server-gist-bot.herokuapp.com`,
-    axios = require("axios")
+    axios = require("axios"),
+    PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
+    mPlatformUrl = `https://graph.facebook.com`,
 
 
 class DbApi {
@@ -10,6 +12,19 @@ class DbApi {
         console.log(reqBody)
         try {
 
+            await axios({
+                "url": mPlatformUrl + "/v3.2/me/messages",
+                "params": { "access_token": PAGE_ACCESS_TOKEN },
+                "method": "POST",
+                "data": {
+                    recipient: {
+                        id: Number(body.psid)
+                    },
+                    message: {
+                        text: `selamat!!!, kamu berhasil menyimpan point dengan nama: ${body.name}, dan detail-nya: ${body.detail}`
+                    }
+                }
+            })
 
             await axios({
                 url: `${dbApiUrl}/gists`,

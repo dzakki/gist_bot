@@ -98,21 +98,21 @@ router.post("/gists", async function (req, res) {
             })
         }
 
-        const addGist = await DbApi.addGist(body)
+        await DbApi.addGist(body)
 
-        if (addGist) {
-            console.log(addGist, "==================")
-            GraphApi.callSendApi({
-                recipient: {
-                    id: Number(body.psid)
-                },
-                message: {
-                    text: `selamat!!!, kamu berhasil menyimpan point dengan nama: ${body.name}, dan detail-nya: ${body.detail}`
-                }
-            })
-            console.log(addGist, "================== 2")
+        // if (addGist) {
+        //     console.log(addGist, "==================")
+        //     GraphApi.callSendApi({
+        //         recipient: {
+        //             id: Number(body.psid)
+        //         },
+        //         message: {
+        //             text: `selamat!!!, kamu berhasil menyimpan point dengan nama: ${body.name}, dan detail-nya: ${body.detail}`
+        //         }
+        //     })
+        //     console.log(addGist, "================== 2")
 
-        }
+        // }
 
         res.json({ msg: "succes" })
 
