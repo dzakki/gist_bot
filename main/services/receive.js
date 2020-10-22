@@ -109,7 +109,7 @@ class Receive {
             }
         } else if (payload === "LIST_GIST") {
             response = []
-            const gists = await DbApi.getGists()
+            const gists = await DbApi.getGists(this.user.psid)
             gists.forEach(gist => {
                 response.push({
                     text: `nama: ${gist.name}. detail: ${gist.detail}`
