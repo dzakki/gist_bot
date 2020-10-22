@@ -1,26 +1,17 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "psid": 1111
-        },
-        {
-            "id": 2,
-            "psid": 2222
-        }
-    ],
+    "users": [],
     "gists": [
         {
             "id": 1,
-            "name": "name",
-            "detail": "detailt of gist",
-            "psid": 1111
+            "name": "motivasi 1",
+            "detail": "sesuatu yang tidak mungkin, hanya butuh waktu yang sedikit lebih lama.",
+            "psid": 3306401049457068
         },
         {
             "id": 2,
-            "name": "name 2",
-            "detail": "detailt of gist 2",
-            "psid": 2222
+            "name": "motivasi 2",
+            "detail": "don't be busy, be productive!",
+            "psid": 3306401049457068
         }
     ]
 }
