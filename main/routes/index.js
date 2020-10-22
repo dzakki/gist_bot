@@ -109,7 +109,7 @@ router.post("/gists", async function (req, res) {
             })
         }
 
-        return res.json({ msg: "succes" })
+        res.json({ msg: "succes" })
 
     } catch (error) {
         return res.status(500).json({

@@ -9,6 +9,7 @@ class graphApi {
 
     static callSendApi(requestBody) {
         // Send the HTTP request to the Messenger Platform
+        console.log('Send the HTTP request to the Messenger Platform')
         axios({
             "url": mPlatformUrl + "/v3.2/me/messages",
             "params": { "access_token": PAGE_ACCESS_TOKEN },
