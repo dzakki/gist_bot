@@ -38,7 +38,7 @@ router.post('/webhook', (req, res) => {
                 const user = await GraphApi.getUserProfile(sender_psid)
                 console.log({ ...user, psid: sender_psid })
                 let receiveMessage = new Receive({ ...user, psid: sender_psid }, webhookEvent);
-                receiveMessage.handleMessage()
+                await receiveMessage.handleMessage()
 
             } catch (error) {
                 console.error(error)

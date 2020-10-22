@@ -107,12 +107,11 @@
 
 
         function saveGist() {
-            // return
-            // const name = document.getElementById("name").value
-            // const detail = document.getElementById("detail").value
-            // if (!name || !detail) {
-            //     return false
-            // }
+            const name = document.getElementById("name").value
+            const detail = document.getElementById("detail").value
+            if (!name || !detail) {
+                return false
+            }
 
             fetch(`${apiUrl}/gists`, {
                 method: "POST",

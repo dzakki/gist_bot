@@ -1,4 +1,6 @@
-const GraphApi = require("./graphApi")
+const
+    GraphApi = require("./graphApi"),
+    DbApi = require("./dbApi")
 
 class Receive {
     constructor(user, webhookEvent) {
@@ -6,7 +8,7 @@ class Receive {
         this.webhookEvent = webhookEvent;
     }
 
-    handleMessage() {
+    async handleMessage() {
         let event = this.webhookEvent;
         let responses;
         try {
@@ -17,7 +19,7 @@ class Receive {
                     responses = this.handleTextMessage();
                 }
             } else if (event.postback) {
-                responses = this.handlePostback();
+                responses = await this.handlePostback();
             }
 
         } catch (error) {
@@ -71,7 +73,7 @@ class Receive {
         return response
     }
 
-    handlePostback() {
+    async handlePostback() {
         const payload = this.webhookEvent.postback.payload.toUpperCase()
         let response;
 
@@ -105,12 +107,15 @@ class Receive {
             response = {
                 text: "Okay!"
             }
-        } else if (payload === "ALERT_SUCCESS_ADD_GIST") {
-            response = {
-                text: this.webhookEvent.postback.payload.text
-            }
+        } else if (payload === "LIST_GIST") {
+            response = []
+            const gists = await DbApi.getGists()
+            gists.forEach(gist => {
+                response.push({
+                    text: `nama: ${gist.name}. detail: ${gist.detail}`
+                })
+            });
         }
-
 
         return response
     }

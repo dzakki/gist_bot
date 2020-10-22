@@ -19,7 +19,17 @@ class DbApi {
             console.error(error.toJSON())
             return false
         }
+    }
 
+
+    static async getGists(psid) {
+        try {
+            const gists = await axios({ url: `${dbApiUrl}/gists?psid=${psid}`, method: "GET" })
+
+            return gists
+        } catch (error) {
+            throw error
+        }
     }
 
 }
