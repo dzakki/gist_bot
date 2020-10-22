@@ -34,6 +34,15 @@
                             style="width: 100%; background-color: white;" id="detail"></textarea>
                     </div>
                     <!-- <p id="msg"></p> -->
+
+                    <div class="alert-dialog-mask alert-dialog-mask--material" id="alert" style="display: none;"></div>
+                    <div class="alert-dialog alert-dialog--material">
+                        <div class="alert-dialog-container alert-dialog-container--material">
+                            <div class="alert-dialog-title alert-dialog-title--material" style="padding-bottom: 20px;">
+                                Berhasil menyimpan poin!!
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="bottom-bar">
@@ -103,45 +112,26 @@
                 return false
             }
 
-            fetch(`${apiUrl}/webhook`, {
+            fetch(`${apiUrl}/gists`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                data: JSON.stringify({
-                    object: "page",
-                    "entry": [{
-                        "messaging": [{
-                            "postback": {
-                                payload: "ALERT_SUCCESS_ADD_GIST",
-                                text: `selamat!, anda berhasil menambahkan poin`
-                            },
-                            sender: {
-                                id: psid
-                            }
-                        }]
-                    }]
+                body: JSON.stringify({
+                    name,
+                    detail,
+                    psid
                 })
             })
-                .then((res) => {
-                    return fetch(`${apiUrl}/gists`, {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            name,
-                            detail,
-                            psid
-                        })
-                    })
-                })
 
                 .then(res => {
                     return res.json()
                 })
                 .then(res => {
-                    closeWebview()
+
+                    document.getElementById("alert").style.display = "block"
+                    setTimeout(closeWebview(), 2000)
+
                 })
                 .catch(err => {
                     console.log(err)
