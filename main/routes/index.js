@@ -104,7 +104,7 @@ router.post("/gists", async function (req, res) {
             console.log(addGist, "==================")
             GraphApi.callSendApi({
                 recipient: {
-                    id: body.psid
+                    id: Number(body.psid)
                 },
                 message: {
                     text: `selamat!!!, kamu berhasil menyimpan point dengan nama: ${body.name}, dan detail-nya: ${body.detail}`
