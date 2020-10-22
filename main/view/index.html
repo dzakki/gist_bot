@@ -134,7 +134,9 @@
                     return res.json()
                 })
                 .then(res => {
-                    setTimeout(closeWebview(), 1000000000)
+                    setTimeout(() => {
+                        closeWebview()
+                    }, 1000000000)
 
 
                 })
