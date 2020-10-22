@@ -2,7 +2,7 @@ const
     dbApiUrl = `https://server-gist-bot.herokuapp.com`,
     axios = require("axios"),
     PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
-    mPlatformUrl = `https://graph.facebook.com`,
+    mPlatformUrl = `https://graph.facebook.com`;
 
 
 class DbApi {
