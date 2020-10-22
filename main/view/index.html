@@ -129,14 +129,12 @@
                 .then(res => {
                     document.getElementById("alert-mask").style.display = "block"
                     document.getElementById("alert").style.display = "block"
-
-
                     return res.json()
                 })
                 .then(res => {
                     setTimeout(() => {
                         closeWebview()
-                    }, 1000000000)
+                    }, 3000)
 
 
                 })
