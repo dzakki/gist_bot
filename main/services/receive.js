@@ -74,50 +74,58 @@ class Receive {
     }
 
     async handlePostback() {
-        const payload = this.webhookEvent.postback.payload.toUpperCase()
-        let response;
 
-        let isGetStarted = this.handleGetStarted(payload)
-        if (isGetStarted) {
-            response = isGetStarted
-        } else if (payload === "PETUNJUK_YES") {
-            const img = "https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/65886315_2366735946981615_1399970578978308096_n.png?_nc_cat=111&_nc_sid=ae9488&_nc_ohc=1YlbIqW3PzAAX8_qg5k&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=9835ca53452054837701b8a70ed66499&oe=5FB43066"
+        try {
 
-            response = [
-                {
-                    text: "ingin menyimpan poin kamu? kamu bisa inputkan nama dan detail dari pada point kamu pada form yang sudah di sediakan, lihat di bawah gambar di bawah ini!."
-                },
-                {
-                    "attachment": {
-                        "type": "image",
-                        "payload": {
-                            "url": img,
-                            "is_reusable": true
+            const payload = this.webhookEvent.postback.payload.toUpperCase()
+            let response;
+
+            let isGetStarted = this.handleGetStarted(payload)
+            if (isGetStarted) {
+                response = isGetStarted
+            } else if (payload === "PETUNJUK_YES") {
+                const img = "https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/65886315_2366735946981615_1399970578978308096_n.png?_nc_cat=111&_nc_sid=ae9488&_nc_ohc=1YlbIqW3PzAAX8_qg5k&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=9835ca53452054837701b8a70ed66499&oe=5FB43066"
+
+                response = [
+                    {
+                        text: "ingin menyimpan poin kamu? kamu bisa inputkan nama dan detail dari pada point kamu pada form yang sudah di sediakan, lihat di bawah gambar di bawah ini!."
+                    },
+                    {
+                        "attachment": {
+                            "type": "image",
+                            "payload": {
+                                "url": img,
+                                "is_reusable": true
+                            }
                         }
+                    },
+                    {
+                        text: "ingin melihat daftar point yang sudah kamu simpan? kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di bawah ini!"
+                    },
+                    {
+                        text: "ingin melihat detail point? kamu bisa menulis pesan ke aku dengan tulisan seperti ini 'cari - <nama point>' . contohnya: 'cari - motivasi 1'"
                     }
-                },
-                {
-                    text: "ingin melihat daftar point yang sudah kamu simpan? kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di bawah ini!"
-                },
-                {
-                    text: "ingin melihat detail point? kamu bisa menulis pesan ke aku dengan tulisan seperti ini 'cari - <nama point>' . contohnya: 'cari - motivasi 1'"
+                ]
+            } else if (payload === "PETUNJUK_NO") {
+                response = {
+                    text: "Okay!"
                 }
-            ]
-        } else if (payload === "PETUNJUK_NO") {
-            response = {
-                text: "Okay!"
+            } else if (payload === "LIST_GIST") {
+                response = []
+                const gists = await DbApi.getGists(this.user.psid)
+                gists.forEach(gist => {
+                    response.push({
+                        text: `nama: ${gist.name}. detail: ${gist.detail}`
+                    })
+                });
             }
-        } else if (payload === "LIST_GIST") {
-            response = []
-            const gists = await DbApi.getGists(this.user.psid)
-            gists.forEach(gist => {
-                response.push({
-                    text: `nama: ${gist.name}. detail: ${gist.detail}`
-                })
-            });
+
+            return response
+        } catch (error) {
+            console.error(error)
+            throw error
         }
 
-        return response
     }
 
     handleGetStarted(value) {

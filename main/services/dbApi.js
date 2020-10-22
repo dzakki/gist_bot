@@ -28,6 +28,7 @@ class DbApi {
 
             return gists
         } catch (error) {
+            console.error(error)
             throw error
         }
     }
