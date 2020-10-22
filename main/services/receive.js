@@ -59,7 +59,24 @@ class Receive {
         if (greetingConfidence) {
             response = this.handleGetStarted(true)
         } else if (isGetStarted) {
-            response = isGetStarted
+            // response = isGetStarted
+
+            response = {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": "Text here",
+                    "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": "https://serene-poitras-32238f.netlify.app",
+                            "title": "tambah gist",
+                            "messenger_extensions": true,
+                            "webview_height_ratio": "compact"
+                        }
+                    ]
+                }
+            }
         }
         // if (message === "help") {
         //     response = {
