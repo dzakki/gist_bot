@@ -107,11 +107,12 @@
 
 
         function saveGist() {
-            const name = document.getElementById("name").value
-            const detail = document.getElementById("detail").value
-            if (!name || !detail) {
-                return false
-            }
+            // return
+            // const name = document.getElementById("name").value
+            // const detail = document.getElementById("detail").value
+            // if (!name || !detail) {
+            //     return false
+            // }
 
             fetch(`${apiUrl}/gists`, {
                 method: "POST",
@@ -132,7 +133,7 @@
 
                     document.getElementById("alert-mask").style.display = "block"
                     document.getElementById("alert").style.display = "block"
-                    setTimeout(closeWebview(), 2000)
+                    // setTimeout(closeWebview(), 2000)
 
                 })
                 .catch(err => {
