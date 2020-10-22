@@ -98,7 +98,10 @@ router.post("/gists", async function (req, res) {
             })
         }
 
-        if (await DbApi.addGist(body)) {
+        const addGist = await DbApi.addGist(body)
+
+        if (addGist) {
+            console.log(addGist, "==================")
             GraphApi.callSendApi({
                 recipient: {
                     id: body.psid
@@ -107,6 +110,8 @@ router.post("/gists", async function (req, res) {
                     text: `selamat!!!, kamu berhasil menyimpan point dengan nama: ${body.name}, dan detail-nya: ${body.detail}`
                 }
             })
+            console.log(addGist, "================== 2")
+
         }
 
         res.json({ msg: "succes" })
