@@ -12,29 +12,35 @@
 
 <body>
     <ons-page>
-        <div class="toolbar toolbar--material">
-            <div class="toolbar__center toolbar--material__center">
-                Gist
+        <div id="content">
+            <div class="toolbar toolbar--material">
+                <div class="toolbar__center toolbar--material__center">
+                    Gist
+                </div>
             </div>
+            <br>
+            <span>
+                <div><input class="text-input text-input--material" placeholder="nama point" type="text" required></div>
+                <br />
+                <div><input class="text-input text-input--material" placeholder="detail point" type="text" required>
+                </div>
+            </span>
+            <span>
+                <div>
+                    <button class="button button--material" onclick="closeWebview()">submit</button>
+                </div>
+            </span>
+            <p id="msg"></p>
         </div>
-        <br>
-        <span>
-            <div><input class="text-input text-input--material" placeholder="nama point" type="text" required></div>
-            <br />
-            <div><input class="text-input text-input--material" placeholder="detail point" type="text" required>
-            </div>
-        </span>
-        <span>
-            <div>
-                <button class="button button--material" onclick="closeWebview()">submit</button>
-            </div>
-        </span>
-        <p id="msg"></p>
     </ons-page>
     <script>
 
+        const contentEl = document.getElementById("content")
+        contentEl.style.display = "none"
+
         let msg = "";
         window.extAsyncInit = function () {
+            contentEl.style.display = "block"
             // the Messenger Extensions JS SDK is done loading
 
             // MessengerExtensions.getUserID(function success(uids) {
@@ -66,6 +72,17 @@
         }(document, 'script', 'Messenger'));
 
 
+        function closeWebview() {
+            MessengerExtensions.requestCloseBrowser(function success() {
+                // webview closed
+                console.log("closed")
+            }, function error(err) {
+                // an error occurred
+                msgEl.innerText += "errror closed " + err
+                console.log(err)
+            });
+        }
+
         // (function (d, s, id) {
         //     var js, fjs = d.getElementsByTagName(s)[0];
         //     if (d.getElementById(id)) { return; }
@@ -95,14 +112,7 @@
         //         }
         //     );
 
-        //     MessengerExtensions.requestCloseBrowser(function success() {
-        //         // webview closed
-        //         console.log("closed")
-        //     }, function error(err) {
-        //         // an error occurred
-        //         msgEl.innerText += "errror closed " + err
-        //         console.log(err)
-        //     });
+        //    
         // };
 
     </script>
