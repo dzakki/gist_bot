@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm install -g json-server && json-server --watch db.json"
+    "start": "node app.js"
   },
   "keywords": [
     "db"
   ],
   "author": "dzakkiaz7@gmail.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.16.2"
+  }
 }
