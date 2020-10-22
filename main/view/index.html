@@ -22,24 +22,24 @@
             <div style="background-color: white; margin-top: 20px; margin-bottom: 20px; padding-bottom: 20px;">
                 <div style="width: 95%; margin: 0 auto;">
                     <br>
-                    <span>
-                        <div>
-                            <input type="text" class="text-input text-input--underbar" placeholder="Nama"
-                                style="width: 100%; padding-left: 5px;">
-                        </div>
-                        <br />
-                        <div>
-                            <textarea class="textarea" rows="3" placeholder="Detail"
-                                style="width: 100%; background-color: white;"></textarea>
-                            <!-- <input class="text-input text-input--material" placeholder="detail point" type="text" required> -->
-                        </div>
-                    </span>
+                    <div>
+                        <span for="name" style="font-weight: 600;"> Name: </span>
+                        <input type="text" class="text-input text-input--underbar" placeholder="Motivasi pertama"
+                            style="width: 100%; padding-left: 5px;" id="name" value="">
+                    </div>
+                    <br />
+                    <div>
+                        <span style="font-weight: 600;"> Detail: </span>
+                        <textarea class="textarea" rows="4" placeholder="Don't be busy, be productive!"
+                            style="width: 100%; background-color: white;" id="detail"></textarea>
+                    </div>
                     <!-- <p id="msg"></p> -->
                 </div>
             </div>
             <div class="bottom-bar">
                 <div class="bottom-bar__line-height" style="text-align:center">
-                    <button class="button button--material" style="width: 95%; margin: 0 auto;">Simpan</button>
+                    <button class="button button--material" style="width: 95%; margin: 0 auto;"
+                        onclick="saveGist()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -48,8 +48,9 @@
 
         const contentEl = document.getElementById("content")
         contentEl.style.display = "none"
+        const apiUrl = "http://localhost:1337"
+        let psid = 3306401049457068;
 
-        let msg = "";
         window.extAsyncInit = function () {
             contentEl.style.display = "block"
             // the Messenger Extensions JS SDK is done loading
@@ -65,11 +66,11 @@
                 function success(thread_context) {
                     // success
                     console.log(thread_context)
-                    document.getElementById("msg").innerText = "succes"
+                    psid = thread_context.psid
                 },
                 function error(err) {
                     // error
-                    document.getElementById("msg").innerText = err
+                    console.log(err)
                 }
             );
         };
@@ -89,42 +90,40 @@
                 console.log("closed")
             }, function error(err) {
                 // an error occurred
-                msgEl.innerText += "errror closed " + err
+                // msgEl.innerText += "errror closed " + err
                 console.log(err)
             });
         }
 
-        // (function (d, s, id) {
-        //     var js, fjs = d.getElementsByTagName(s)[0];
-        //     if (d.getElementById(id)) { return; }
-        //     js = d.createElement(s); js.id = id;
-        //     js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
-        //     fjs.parentNode.insertBefore(js, fjs);
-        // }(document, 'script', 'Messenger'));
 
+        function saveGist() {
+            const name = document.getElementById("name").value
+            const detail = document.getElementById("detail").value
+            if (!name || !detail) {
+                return false
+            }
 
-        // window.extAsyncInit = function () {
-        //     // the Messenger Extensions JS SDK is done loading 
-        //     console.log("the Messenger Extensions JS SDK is done loading ")
-
-        //     let msgEl = document.getElementById("msg")
-        //     msg = "the Messenger Extensions JS SDK is done loading "
-        //     msgEl.innerText = msg
-        //     MessengerExtensions.getContext('806064523477703',
-        //         function success(thread_context) {
-        //             // success
-        //             msgEl.innerText += JSON.stringify(thread_context)
-        //             console.log(thread_context)
-        //         },
-        //         function error(err) {
-        //             // error
-        //             msgEl.innerText += "errror contect " + err
-        //             console.log(err)
-        //         }
-        //     );
-
-        //    
-        // };
+            fetch(`${apiUrl}/gists`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name,
+                    detail,
+                    psid
+                })
+            })
+                .then(res => {
+                    return res.json()
+                })
+                .then(res => {
+                    closeWebview()
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
 
     </script>
 

@@ -9,11 +9,12 @@ const
     app = express(),
     router = require("./routes"),
     path = require('path'),
+    cors = require("cors"),
     PORT = process.env.PORT || 1337;
 
-
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 
 const publicPath = path.join(__dirname, 'view');

@@ -1,7 +1,8 @@
 const
     router = require("express").Router(),
     Receive = require("../services/receive"),
-    GraphApi = require("../services/graphApi")
+    GraphApi = require("../services/graphApi"),
+    DbApi = require("../services/dbApi")
 
 router.get("/", (req, res) => {
     res.send("hello world")
@@ -84,5 +85,39 @@ router.get('/webhook', (req, res) => {
         }
     }
 });
+
+
+router.post("/gists", async function (req, res) {
+
+    try {
+        console.log(req.body)
+        const { body } = req
+        if (!body.name || !body.detail || !body.psid) {
+            return res.status(400).json({
+                msg: "invalid input"
+            })
+        }
+
+        if (await DbApi.addGist(body)) {
+            GraphApi.callSendApi({
+                recipient: {
+                    id: body.psid
+                },
+                message: {
+                    text: `selamat!!!, kamu berhasil menyimpan point dengan nama: ${body.name}, dan detail-nya: ${body.detail}`
+                }
+            })
+        }
+
+        return res.json({ msg: "succes" })
+
+    } catch (error) {
+        return res.status(500).json({
+            msg: "internal server"
+        })
+    }
+
+
+})
 
 module.exports = router
