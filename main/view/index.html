@@ -130,12 +130,12 @@
                     document.getElementById("alert-mask").style.display = "block"
                     document.getElementById("alert").style.display = "block"
 
-                    setTimeout(_, 50000)
+
                     return res.json()
                 })
                 .then(res => {
+                    setTimeout(closeWebview(), 1000000000)
 
-                    closeWebview()
 
                 })
                 .catch(err => {
