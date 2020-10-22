@@ -24,7 +24,7 @@ class DbApi {
 
     static async getGists(psid) {
         try {
-            const gists = await axios({ url: `${dbApiUrl}/gists?psid=${psid}`, method: "GET" })
+            const { data: gists } = await axios({ url: `${dbApiUrl}/gists?psid=${psid}`, method: "GET" })
 
             return gists
         } catch (error) {
