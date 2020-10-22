@@ -25,7 +25,7 @@ router.post('/webhook', (req, res) => {
 
 
             // Get the sender PSID
-            let sender_psid = webhookEvent.sender.id;
+            let sender_psid = +webhookEvent.sender.id;
             console.log('Sender PSID: ' + sender_psid);
 
 
