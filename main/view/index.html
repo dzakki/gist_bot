@@ -35,8 +35,9 @@
                     </div>
                     <!-- <p id="msg"></p> -->
 
-                    <div class="alert-dialog-mask alert-dialog-mask--material alert" style="display: none;"></div>
-                    <div class="alert-dialog alert-dialog--material alert" style="display: none;">
+                    <div class="alert-dialog-mask alert-dialog-mask--material" id="alert-mask" style="display: none;">
+                    </div>
+                    <div class="alert-dialog alert-dialog--material" id="alert" style="display: none;">
                         <div class="alert-dialog-container alert-dialog-container--material">
                             <div class="alert-dialog-title alert-dialog-title--material" style="padding-bottom: 20px;">
                                 Berhasil menyimpan poin!!
@@ -129,7 +130,8 @@
                 })
                 .then(res => {
 
-                    document.getElementsByClassName("alert").style.display = "block"
+                    document.getElementById("alert-mask").style.display = "block"
+                    document.getElementById("alert").style.display = "block"
                     setTimeout(closeWebview(), 2000)
 
                 })
