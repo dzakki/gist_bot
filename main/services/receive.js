@@ -61,7 +61,7 @@ class Receive {
         const isGetStarted = this.handleGetStarted(message)
 
 
-        if (greetingConfidence || payload === "INTRO_AND_PETUNJUK_YES") {
+        if (greetingConfidence) {
             response = this.handleGetStarted(true)
         } else if (isGetStarted) {
             response = isGetStarted
