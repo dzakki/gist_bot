@@ -53,6 +53,7 @@ class Receive {
         let greetingConfidence = this.isGreetings(this.webhookEvent.message.nlp)
 
         let message = this.webhookEvent.message.text.trim().toUpperCase();
+        const payload = this.webhookEvent.message.payload
         let response = {
             text: "pesan anda tidak bisa di baca oleh gist bot"
         }
@@ -60,7 +61,7 @@ class Receive {
         const isGetStarted = this.handleGetStarted(message)
 
 
-        if (greetingConfidence || message === "INTRO_AND_PETUNJUK_YES") {
+        if (greetingConfidence || payload === "INTRO_AND_PETUNJUK_YES") {
             response = this.handleGetStarted(true)
         } else if (isGetStarted) {
             response = isGetStarted
