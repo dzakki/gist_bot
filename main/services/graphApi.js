@@ -20,7 +20,7 @@ class graphApi {
                 console.log('message sent!')
             })
             .catch((err) => {
-                console.error("Unable to send message:" + err);
+                console.error("Unable to send message:" + err.toJSON());
             })
     }
 
