@@ -48,8 +48,7 @@ class Receive {
             `${this.webhookEvent.message.text} for ${this.user.psid}`
         );
 
-        // console.log(this.webhookEvent.message.nlp, "this.webhookEvent.message.nlp")
-        // console.log(this.webhookEvent.message, "this.webhookEvent.message")
+
         // check greeting is here and is confident
         let greetingConfidence = this.isGreetings(this.webhookEvent.message.nlp)
 
@@ -57,19 +56,13 @@ class Receive {
         let response = "pesan anda tidak bisa di baca";
 
         const isGetStarted = this.handleGetStarted(message)
-        // console.log(isGetStarted, "==============", message, "=================")
+
+
         if (greetingConfidence) {
             response = this.handleGetStarted(true)
         } else if (isGetStarted) {
             response = isGetStarted
         }
-        // if (message === "help") {
-        //     response = {
-        //         text: "help ..... ..... ....."
-        //     }
-        // }
-
-        // console.log(this.user, "this user")
         return response
     }
 
@@ -84,11 +77,14 @@ class Receive {
             if (isGetStarted) {
                 response = isGetStarted
             } else if (payload === "PETUNJUK_YES") {
-                const img = "https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/65886315_2366735946981615_1399970578978308096_n.png?_nc_cat=111&_nc_sid=ae9488&_nc_ohc=1YlbIqW3PzAAX8_qg5k&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=9835ca53452054837701b8a70ed66499&oe=5FB43066"
+                const img = "https://i.ibb.co/qRQjzJn/Screenshot-77.png"
 
                 response = [
                     {
                         text: "ingin menyimpan poin kamu? kamu bisa inputkan nama dan detail dari pada point kamu pada form yang sudah di sediakan, lihat di bawah gambar di bawah ini!."
+                    },
+                    {
+                        text: "ingin melihat daftar point yang sudah kamu simpan? kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di bawah ini!"
                     },
                     {
                         "attachment": {
@@ -99,12 +95,6 @@ class Receive {
                             }
                         }
                     },
-                    {
-                        text: "ingin melihat daftar point yang sudah kamu simpan? kamu bisa klik tombol 'daftar point' yang sudah di sediakan, lihat gambar di bawah ini!"
-                    },
-                    {
-                        text: "ingin melihat detail point? kamu bisa menulis pesan ke aku dengan tulisan seperti ini 'cari - <nama point>' . contohnya: 'cari - motivasi 1'"
-                    }
                 ]
             } else if (payload === "PETUNJUK_NO") {
                 response = {
@@ -118,6 +108,8 @@ class Receive {
                         text: `nama: ${gist.name}. detail: ${gist.detail}`
                     })
                 });
+            } else if (payload === "INTRO_AND_PETUNJUK_YES") {
+                response = handleGetStarted(true)
             }
 
             return response
@@ -139,7 +131,7 @@ class Receive {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan memori ku?",
+                        "text": "apakah kamu membutuh kan pentunjuk untuk menggunakan Gist bot?",
                         "buttons": [
                             {
                                 "type": "postback",
@@ -168,12 +160,6 @@ class Receive {
     }
 
     sendMessage(response, delay = 0) {
-        // Construct the message body
-
-        // if ("delay" in response) {
-        //     delay = response["delay"];
-        //     delete response["delay"];
-        // }
 
         let requestBody = {
             recipient: {
