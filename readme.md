@@ -46,7 +46,7 @@ sekarang kita siapkan struktur folder aplikasi seperti berikut ini.
 ``` 
 
 
-### membuat webhook
+### Set up webhook
 
 kita perlu membuat webhook, karena webhook adalah inti dari pada aplikasi kita agar bisa berkomunikasi dengan messanger sehingga aplikasi bisa menerima pesan, memproses dan mengirim pesan. untuk membuatnya ikuti langkah langkah sebagai berikut:
 
@@ -112,7 +112,7 @@ kode ini atau enpoint `/webhook` dengan method post digunakan menerima semua eve
 note: pada kode ini, kita hanya membuat response dengan status kode 200 dan tidak perlu membuat response json karena tidak di butuhkan.
 
 
-#### membuat enpoint untuk verifikasi webhook 
+#### membuat verifikasi webhook 
 tambahkan kode berikut pada file `routes/index.js`.
 
 ```js
@@ -170,7 +170,47 @@ $ curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d '
 
 jika test tersebut mengularkan tulisan `EVENT RECEIVED` pada terminal, maka webhook sudah berkeja dengan benar.
 
-#### deploy webhook
+#### Deploy webhook
 agar webhook ketika bisa digunakan untuk berkomunikasi dengan messanger, kita harus deploy pada server dengan [sertifikat SSL](#) yang valid terlebih dahulu. kita bisa deploy aplikasi-nya menggunakan heroku atau aws, tapi yang saya sarankan pake heroku saja karena mudah dan gratis.
 
-#### hubungkan webhook kita dengan facebook app
+## Hubungkan webhook dengan facebook app
+
+Setelah kita berhasil membuat webhook, sekarang kita akan menghubungkan webhook dengan facebook app, agar webhook kita bisa digunakan untuk komunikasi dengan messanger dan sebalik-nya. 
+
+
+### Persiapan
+
+Sebelum kita mulai, ada beberapa hal yang harus kita siapkan dan pastikan kita memiliki semua yang ada dibawah ini:
+
+- **Facebook Page**: sebuah halaman facebook yang akan digunakan sebagai identitas messanger kita. saat orang orang mengobrol dengan aplikasi kita, maka mereka akan melihat nama dan foto dari halaman facebook kita. untuk membuat nya, kamu bisa mengunjungi link ini: [https://www.facebook.com/pages/create](https://www.facebook.com/pages/create)
+
+- **Facebook Developer Account**: memiliki akun Facebook Developer untuk membuat aplikasi baru, agar aplikasi kita bisa ter-integrasi dengan **Facebook App**.
+untuk membuat akun Facebook Developer bisa mengunjungi [Facebook Developer](https://developers.facebook.com/) kemudian klik tombol **Get Started**.
+
+- **Facebook App**: memiliki facebook app untuk mengatur pengalaman messanger, termasuk akses token. untuk membuatnya, bisa kunjungi [app dashboard](https://developers.facebook.com/apps) kamu.
+
+- Webhook URL: url webhook yang sudah di deploy dan sudah ter-strifikat dengan SSL yang valid.
+
+### Menghubungkan webhook dengan facebook app
+sebelum kita mulai, pastikan persiapan-persiapan di atas sudah terpenuhi.
+
+#### Menambahkan messanger platform pada facebook app
+1. buka dashboard facebook app kamu > klik tombol `+` di samping tulisan **PRODUCTS** pada sidebar
+2. cari produk messanger -> klik tombol `Set Up`
+
+messanger platform akan ditambahkan ke produk facebook app kamu, kemudian muncul messanger `settings`.
+
+#### Konfigurasi webhook dengan facebook appw
+1. klik tombol `settings` > di bagian **Webhook** klik tombol `Setup Webhook`.
+2. di inputan **Callback URL** kamu bisa masukkan url webhook kamu yang sudah di deploy, contoh: `https://gist-botv2.herokuapp.com/webhook`.
+3. pada inputan **Verify Token** kamu bisa masukkan [kode verify token](#membuat-verifikasi-webhook) yang sudah kamu buat.
+4. klik tombol `Verify and Save`.
+
+#### Menghubungkan facebook page pada facebook app
+1. klik tombol `Add or Remove Pages` -> pilih facebook page yang mau kamu gunakan cukup satu aja.
+2. di bagian **access token** disana akan ada tombol `Generate Button` setiap facebook page yang sudah ter-otorisasi. klik tombol `Generate Button` untuk mendapatkan access token, dan pastikan access token tersebut kita simpan karena akan di gunakan pada webhook kita, agar webhook bisa komunikasi dengan messanger.
+3. di bagian **Webhooks** ada daftar facebook page yang sudah ter-otorisasi > klik tombol `edit` > centang `messanges` dan `messaging_postbacks` > Save. langkah ini dilakukan agar webhook kita bisa menerima event `messanges` dan `messaging_postbacks`.
+
+#### test apakah webhook sudah terhubung 
+untuk mengetes apakah webhook kita sudah terhubung atau belum, kita bisa mencoba mengirim pesan pada messanger facebook page kita kemudian kita check terminal pada server kita. jika terminal mengeluarkan event yang dikirimkan oleh messanger, maka webhook berhasil di hubungkan dengan facebook app.
+
