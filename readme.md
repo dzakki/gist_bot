@@ -233,7 +233,7 @@ ketika user mengirim pesan salam pembuka pada messanger page kita, seperti: Hell
 
 #### Membuat fungsi untuk menangani pesan yang masuk
 
-Tambak kode dibawah ini pada file `/services/receive.js`
+Tambahkan kode dibawah ini pada file `/services/receive.js`
 
 ```js
 class Receive {
@@ -305,3 +305,90 @@ module.exports = Receive
 
 ```
 
+#### Membuat fungsi agar pesan bisa dikirim ke pengirim.
+
+pada cuplikan kode dibawah ini 
+
+```js
+if (message.text) { // apakah yang dikirimkan berupa message denga tipe text
+    responses = this.handleTextMessage(); // panggil method handleTextMessage
+}
+```
+
+bahwasan-nya kita sudah menyediakan response untuk mengirimkan pesan kembali (membalas pesan). namun kita belum manangani agar pesan yang mau dikirim bisa terkirim ke pada pengirim. cara menangani hal tesebut, masukkan kode dibawah ini pada file `services/graphApi.js`
+
+```js
+const
+    mPlatformUrl = `https://graph.facebook.com`,
+    PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
+    axios = require("axios")
+
+    class graphApi {
+
+    static callSendApi(requestBody) {
+        // Send the HTTP request to the Messenger Platform
+        console.log('Send the HTTP request to the Messenger Platform', "==============================")
+        axios({
+            "url": mPlatformUrl + "/v3.2/me/messages",
+            "params": { "access_token": PAGE_ACCESS_TOKEN },
+            "method": "POST",
+            "data": requestBody
+        })
+            .then(() => {
+                console.log('message sent!')
+            })
+            .catch((err) => {
+                console.error("Unable to send message:" + err.toJSON());
+            })
+    }
+
+}
+
+
+module.exports = graphApi
+```
+
+lalu tambahkan kode dibawah ini pada file `routes/index.js`
+
+
+```js
+// ...
+    router = require("express").Router(),
+    Receive = require("../services/receive"); // import file receive
+
+
+router.post('/webhook', (req, res) => {  
+ 
+  //...
+
+
+    body.entry.forEach( async function(entry) {
+
+      let webhook_event = entry.messaging[0];
+      console.log(webhook_event);
+
+      // Get the sender PSID
+      let sender_psid = +webhookEvent.sender.id;
+      console.log('Sender PSID: ' + sender_psid);
+
+      try {
+            // panggil class Receive, dan masukkan psid dan webhook event sebagai data constructor
+            let receiveMessage = new Receive({ psid: sender_psid }, webhookEvent);
+            await receiveMessage.handleMessage() // panggil method HandleMessange
+
+        } catch (error) {
+            console.error(error)
+            res.sendStatus(400);
+        }
+    });
+
+  //...
+
+});
+
+```
+
+#### Melakukan uji coba
+setelah kita melakukan langkah langkah tersebut, alangkah baik nya kita melakukan uji coba terlebih dahulu. sebelum melakukan uji coba, kamu harus mendeploy ulang aplikasi kita.
+
+ketika melakukan uji coba harusnya mengeluarkan hasil seperti gambar dibawah ini:
