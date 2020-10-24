@@ -493,3 +493,7 @@ handleTextMessage() {
 #### Melakukan uji coba ke-2
 oke, sekarang kita uji coba kembali dan seharusnya hasil sudah menjadi seperti ini:
 
+
+<p align="center">
+  <img src="./main/assets/images/uji-coba-2.png" alt="uji-coba-2" />
+</p>
