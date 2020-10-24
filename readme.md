@@ -190,7 +190,7 @@ untuk membuat akun Facebook Developer bisa mengunjungi [Facebook Developer](http
 
 - **Facebook App**: Memiliki facebook app untuk mengatur pengalaman messanger, termasuk akses token. untuk membuatnya, bisa kunjungi [app dashboard](https://developers.facebook.com/apps) kamu.
 
-- Webhook URL: url webhook yang sudah di deploy dan sudah ter-strifikat dengan SSL yang valid.
+- **Webhook URL**: Pastikan webhook kita sudah di deploy dengan server yang ter-strifikat SSL yang valid, agar url nya sudah menjadi `HTTPS`.
 
 ### Menghubungkan webhook dengan facebook app
 Sebelum kita mulai, pastikan [persiapan-persiapan](#Persiapan) di atas sudah terpenuhi.
