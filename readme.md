@@ -5,7 +5,7 @@
 
 Hal pertama yang harus kita lakukan adalah membuat setup pada aplikasi, dan pastikan nodejs sudah ter-install pada pc kita.
 
-langkah pertama jalankan command dibawah ini pada terminal kita untuk membuat `package.json`.
+langkah pertama jalankan command dibawah ini pada terminal untuk membuat `package.json`.
 ```
 $ npm init -y
 ```
@@ -26,7 +26,7 @@ selanjutnya kita siapkan package-package yang di butuhkan seperti [express](#), 
 $ npm install express axios dotenv cors
 ```
 
-sekarang kita siapkan struktur folder aplikasi kita seperti berikut ini.
+sekarang kita siapkan struktur folder aplikasi seperti berikut ini.
 
 ```
 /app 
@@ -48,7 +48,7 @@ sekarang kita siapkan struktur folder aplikasi kita seperti berikut ini.
 
 ### membuat webhook
 
-kita perlu membuat webhook, karena webhook adalah inti dari pada aplikasi kita agar bisa berkomunikasi dengan messanger sehingga kita bisa menerima pesan, memproses dan mengirim pesan. untuk membuatnya ikuti langkah langkah sebagai berikut:
+kita perlu membuat webhook, karena webhook adalah inti dari pada aplikasi kita agar bisa berkomunikasi dengan messanger sehingga aplikasi bisa menerima pesan, memproses dan mengirim pesan. untuk membuatnya ikuti langkah langkah sebagai berikut:
 
 #### membuat [HTTP server](#). 
 
@@ -151,24 +151,24 @@ let VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>"
 
 #### melakukan test pada webhook
  
-pertama kita jalankan aplikasi kita di local kita (localhost).
+pertama jalankan aplikasi kita di local (localhost).
 ```
 $ node index.js
 ```
-kedua kita coba untuk melakukan test pada webhook verifikasi kita dengan menggunakan [curl](#)
+kedua kita coba untuk melakukan test pada webhook verifikasi dengan menggunakan [curl](#)
 
 <pre>
 $ curl -X GET "localhost:1337/webhook?hub.verify_token=<b>YOUR_VERIFY_TOKEN</b>&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
 </pre>
 
-jika test tersebut mengeluarkan tulisan `CHALLENGE_ACCEPTED` pada terminal anda, maka webhook verifikasi sudah bekerja dengan benar.
+jika test tersebut mengeluarkan tulisan `CHALLENGE_ACCEPTED` pada terminal kita, maka webhook verifikasi sudah bekerja dengan benar.
 
 ketiga kita coba melakukan test untuk webhook kita.
 ```
 $ curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "TEST_MESSAGE"}]}]}'
 ```
 
-jika test tersebut mengularkan tulisan `EVENT RECEIVED` pada terminal ada, maka webhook sudah berkeja dengan benar.
+jika test tersebut mengularkan tulisan `EVENT RECEIVED` pada terminal, maka webhook sudah berkeja dengan benar.
 
 #### deploy webhook
 agar webhook ketika bisa digunakan untuk berkomunikasi dengan messanger, kita harus deploy pada server dengan [sertifikat SSL](#) yang valid terlebih dahulu. kita bisa deploy aplikasi-nya menggunakan heroku atau aws, tapi yang saya sarankan pake heroku saja karena mudah dan gratis.
