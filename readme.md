@@ -174,7 +174,7 @@ Jika test tersebut mengularkan tulisan `EVENT RECEIVED` pada terminal, maka webh
 #### Deploy webhook
 Sgar webhook ketika bisa digunakan untuk berkomunikasi dengan messanger, kita harus deploy pada server dengan [sertifikat SSL](#) yang valid. Kita bisa deploy aplikasi kita menggunakan heroku atau aws, tapi yang saya sarankan pake heroku saja karena mudah dan gratis.
 
-## Hubungkan webhook dengan facebook app
+### Hubungkan webhook dengan facebook app
 
 Setelah kita berhasil membuat webhook, sekarang kita akan menghubungkan webhook dengan facebook app, agar webhook kita bisa digunakan untuk komunikasi dengan messanger dan sebalik-nya. 
 
@@ -209,9 +209,99 @@ Messanger platform akan ditambahkan ke produk facebook app kamu, kemudian muncul
 
 #### Menghubungkan facebook page pada facebook app
 1. Klik tombol `Add or Remove Pages` -> pilih facebook page yang mau kamu gunakan cukup satu aja.
-2. Di bagian **access token** disana akan ada tombol `Generate Button` setiap facebook page yang sudah ter-otorisasi. klik tombol `Generate Button` untuk mendapatkan access token, dan pastikan access token tersebut kita simpan karena akan di gunakan pada webhook kita, agar webhook bisa komunikasi dengan messanger.
+2. Di bagian **access token** disana akan ada tombol `Generate Button` setiap facebook page yang sudah ter-otorisasi. klik tombol `Generate Token` untuk mendapatkan access token, dan pastikan access token tersebut kita simpan karena akan di gunakan pada webhook kita, agar webhook bisa komunikasi dengan messanger.
 3. Di bagian **Webhooks** ada daftar facebook page yang sudah ter-otorisasi > klik tombol `edit` > centang `messanges` dan `messaging_postbacks` > Save. langkah ini dilakukan agar webhook kita bisa menerima event `messanges` dan `messaging_postbacks`.
 
 #### Test apakah webhook sudah terhubung 
-Untuk mengetes apakah webhook kita sudah terhubung atau belum, kita bisa mencoba mengirim pesan pada messanger facebook page kita kemudian kita check terminal pada server kita. jika terminal mengeluarkan event yang dikirimkan oleh messanger, maka webhook berhasil di hubungkan dengan facebook app.
+Untuk mengetes apakah webhook kita sudah terhubung atau belum, kita bisa mencoba mengirim pesan pada messanger facebook page kita kemudian kita check terminal pada server kita. Jika terminal mengeluarkan event yang dikirimkan oleh messanger, maka webhook berhasil di hubungkan dengan facebook app.
+
+
+### Meyimpan access token in environment variables
+untuk menyimpan access token yang sudah kita generate tadi, kita bisa simpan di dalam file `.env`. Jika kita lupa access token-nya, silakan kembali ke langkah [Menghubungkan facebook page pada facebook app](#Menghubungkan-facebook-page-pada-facebook-app) pada nomer **2**
+
+```
+# Page and Application information
+PAGE_ACCESS_TOKEN=<ACCESS_TOKEN>
+```
+
+### Menangani pesan salam pembuka.
+ketika user mengirim pesan salam pembuka pada messanger page kita, seperti: Hello, Hi. maka messanger akan membalas pesan tersebut seperti: ` Hi <name>! selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
+
+<p align="center">
+  <img src="./main/assets/images/salam-pembuka.png" alt="salam-pembuka" />
+</p>
+
+#### Membuat fungsi untuk menangani pesan yang masuk
+
+Tambak kode dibawah ini pada file `/services/receive.js`
+
+```js
+class Receive {
+ constructor(user, webhookEvent) {
+      this.user = user;
+      this.webhookEvent = webhookEvent;
+  }
+
+
+  async handleMessage() {
+        let event = this.webhookEvent;
+        let responses;
+        try {
+            if (event.message) { // apakah yang dikirimkan berupa message yang tidak kosong
+                let message = event.message;
+
+                if (message.text) { // apakah yang dikirimkan berupa message denga tipe text
+                    responses = this.handleTextMessage(); // panggil method handleTextMessage
+                }
+            } 
+
+        } catch (error) {
+            console.error(error);
+            responses = {
+                text: `An error has occured: '${error}'. We have been notified and \
+                will fix the issue shortly!`
+            };
+        }
+  }
+
+
+  handleTextMessage() {
+        console.log(
+            "Received text:",
+            `${this.webhookEvent.message.text} for ${this.user.psid}`
+        );
+
+
+        let nlp = this.webhookEvent.message.nlp
+
+        let message = this.webhookEvent.message.text.trim().toUpperCase();
+        
+
+        let response = {
+            text: "pesan anda tidak bisa di baca oleh gist bot"
+        }
+
+        // apakah pesan yang dikirimkan berupa salam pembuka?
+        if (  nlp 
+              && nlp.traits 
+              && nlp.traits['wit$greetings'] 
+              && nlp.traits['wit$greetings'][0] 
+              && nlp.traits['wit$greetings'][0].confidence > 0.8 
+            ) {
+
+            response = {
+                text: `Hi <name> selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
+            }
+        }
+
+        return response
+  }
+
+}
+
+
+
+module.exports = Receive
+
+```
 
