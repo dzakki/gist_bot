@@ -389,6 +389,107 @@ router.post('/webhook', (req, res) => {
 ```
 
 #### Melakukan uji coba
+
 setelah kita melakukan langkah langkah tersebut, alangkah baik nya kita melakukan uji coba terlebih dahulu. sebelum melakukan uji coba, kamu harus mendeploy ulang aplikasi kita.
 
 ketika melakukan uji coba harusnya mengeluarkan hasil seperti gambar dibawah ini:
+
+<p align="center">
+  <img src="./main/assets/images/uji-coba-1.png" alt="uji-coba-1" />
+</p>
+
+jika hasil tidak sesuai seperti yang digambar, maka kita coba ulangi kembali langkah-langkah dari [Membuat fungsi untuk menangani pesan yang masuk](#) dst, sampai berhasil. 
+
+Jika hasil sudah sesuai seperti gambar di-atas maka kita coba perhatikan gambar tersebut atau pesan yang dikirim kan oleh aplikasi, bahwasanya pesan yang dikirimkan ada sebuah kata `<name>` yang seharusnya kata tersebut menjadi nama yang sedang mengobrol dengan messanger kita.  
+
+#### Mendapatkan nama pengirim
+
+tambahkan kode berikut pada `services/graphApi.js`
+
+```js
+class graphApi {
+    // ...
+
+    static async getUserProfile(senderPsid) {
+        try {
+            const { data: user } = await axios({
+                url: `${mPlatformUrl}/${senderPsid}`,
+                params: {
+                    access_token: PAGE_ACCESS_TOKEN,
+                    fields: "first_name, last_name, gender, locale, timezone"
+                },
+                method: "GET"
+            })
+
+            console.log(user)
+            return user
+
+        } catch (error) {
+            console.error("Unable to fetch profile:" + error);
+            throw error
+        }
+    }
+    
+
+}
+
+// ...
+```
+
+kemudian tambahkan kode berikut pada `routes/index.js`
+
+```js
+
+// ...
+router.post('/webhook', (req, res) => {
+    // ...
+        body.entry.forEach(async function (entry) {
+
+            // ...
+
+            try {
+
+
+                const user = await GraphApi.getUserProfile(sender_psid)
+                console.log({ ...user, psid: sender_psid })
+                let receiveMessage = new Receive({ ...user, psid: sender_psid }, webhookEvent);
+                await receiveMessage.handleMessage()
+
+            } catch (error) {
+                // ...
+            }
+        });
+    // ...
+
+});
+// ...
+```
+
+lalu tambahkan kode berikut pada file `services/receives.js`
+
+```js
+// ...
+
+handleTextMessage() {
+
+        // ...
+
+        if (  nlp 
+              && nlp.traits 
+                // ...
+            ) {
+
+            response = {
+                text: `Hi  ${this.user.first_name} selamat datang di Gist Bot, dimana kamu bisa menyimpan poin poin penting yang kamu punya di memori aku.`
+            }
+        }
+
+        // ...
+    }
+
+// ...
+```
+
+#### Melakukan uji coba ke-2
+oke, sekarang kita uji coba kembali dan seharusnya hasil sudah menjadi seperti ini:
+
