@@ -216,7 +216,7 @@ Messanger platform akan ditambahkan ke produk facebook app kamu, kemudian muncul
 Untuk mengetes apakah webhook kita sudah terhubung atau belum, kita bisa mencoba mengirim pesan pada messanger facebook page kita kemudian kita check terminal pada server kita. Jika terminal mengeluarkan event yang dikirimkan oleh messanger, maka webhook berhasil di hubungkan dengan facebook app.
 
 
-### Meyimpan access token in environment variables
+### Meyimpan access token di environment variables
 untuk menyimpan access token yang sudah kita generate tadi, kita bisa simpan di dalam file `.env`. Jika kita lupa access token-nya, silakan kembali ke langkah [Menghubungkan facebook page pada facebook app](#Menghubungkan-facebook-page-pada-facebook-app) pada nomer **2**
 
 ```
